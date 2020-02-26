@@ -116,9 +116,7 @@ class grid:
             else:
                 return False
 
-    def CHILDREN(self, sl, depth, gridSize):  # Function to try out all the moves and add it to the childList.
-        if len(self.PATH) >= depth: # Doesn't explore anymore children nodes and returns out if the depth limit is hit.
-            return []
+    def CHILDREN(self, sl, gridSize):  # Function to try out all the moves and add it to the childList.
 
         childList = []
         for direction in ['Up', 'Down', 'Left', 'Right']:

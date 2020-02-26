@@ -4,7 +4,7 @@
 
 import sys
 from datetime import datetime
-from dfts import ID_DFTS
+from gbfs import gbfs
 
 from scraper import *
 
@@ -18,7 +18,7 @@ if __name__ == '__main__':
     firstState, goal, spawnList, gridSize = inputGrabber(inputFile)
     # Timer to measure the execution time.
     startTime = datetime.now()
-    sol = ID_DFTS(firstState, goal, spawnList, gridSize)
+    sol = gbfs(firstState, goal, spawnList, gridSize)
     endTime = datetime.now()
     execTime = endTime - startTime
     print(execTime.microseconds)
