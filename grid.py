@@ -68,6 +68,19 @@ class grid:
         self.SPAWN = spawn
         self.spawnList = spawn_list
         self.size = size
+        self.H = self.heuristic()
+
+    def __lt__(self, other):
+        if self.H < other.H:
+            return True
+        return False
+
+    def heuristic(self):
+        highScore = 0
+        for line in self.STATE:
+            for i in line:
+                if i > highScore:
+                    return highScore
 
     def move(self, direction, spawnVal):
         def move_row_left(row):
