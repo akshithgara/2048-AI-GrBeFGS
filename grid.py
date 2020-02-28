@@ -2,6 +2,8 @@
 # 2048 AI
 # CS5400
 
+import copy
+
 
 def transpose(field):
     return [list(row) for row in zip(*field)]
@@ -70,17 +72,49 @@ class grid:
         self.size = size
         self.H = self.heuristic()
 
-    def __lt__(self, other):
-        if self.H < other.H:
+    def __gt__(self, other):
+        if self.H > other.H:
             return True
         return False
 
-    def heuristic(self):
+    def getMaxTile(self):
         highScore = 0
         for line in self.STATE:
             for i in line:
                 if i > highScore:
                     return highScore
+        return highScore
+
+    def getAvailableCells(self):
+        cells = 0
+        grid = self.STATE
+        for x in grid:
+            for y in x:
+                if y == 0:
+                    cells += 1
+        return cells
+
+    def mergeFactor(self):
+        mergeCount = 0
+        grid = copy.deepcopy(self.STATE)
+        for row in grid:
+            new_row = [i for i in row if i != 0]
+            new_row += [0 for i in range(len(row) - len(new_row))]
+            for i in range(len(new_row)):
+                if i + 1 < len(new_row) and new_row[i] == new_row[i + 1]:
+                    mergeCount += 1
+
+        newGrid = transpose(grid)
+        for row in newGrid:
+            new_row = [i for i in row if i != 0]
+            new_row += [0 for i in range(len(row) - len(new_row))]
+            for i in range(len(new_row)):
+                if i + 1 < len(new_row) and new_row[i] == new_row[i + 1]:
+                    mergeCount += 1
+        return mergeCount
+
+    def heuristic(self):
+        return self.getMaxTile() + self.mergeFactor() + self.getAvailableCells()
 
     def move(self, direction, spawnVal):
         def move_row_left(row):

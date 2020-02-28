@@ -12,25 +12,30 @@ def isGoal(state, goal):
     return False
 
 
-# Implementation of Iterative Deepening DFS
+# Implementation of Greedy Best First Search
 def gbfs(state, goal, spawnList, gridSize):
-    frontier = queue.PriorityQueue()  # Stack implementation
+    frontier = queue.PriorityQueue()  # Priority Queue Implementation
 
     root = grid(state, '', 0, spawnList, gridSize)
     frontier.put(root)
 
     explored = []
 
-    while True:
-        if frontier.empty():
-            break
+    while not frontier.empty():
 
         curNode = frontier.get()
 
-        if isGoal(curNode.STATE, goal):  # Checks if the goal state is reached.
+        if isGoal(curNode.STATE, goal):
+            # print(curNode.STATE)# Checks if the goal state is reached.
             return curNode.PATH, curNode
 
-        for child in curNode.CHILDREN(spawnList, gridSize):
-            if child.STATE not in explored:
-                frontier.put(child)
-                explored.append(child.STATE)
+        else:
+            for child in curNode.CHILDREN(spawnList, gridSize):
+                visited = False
+                for i in explored:
+                    # print(i)
+                    if i == child.STATE:
+                        visited = True
+                if not visited:
+                    frontier.put(child)
+                    explored.append(child.STATE)
