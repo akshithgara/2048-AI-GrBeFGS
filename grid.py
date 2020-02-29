@@ -77,6 +77,16 @@ class grid:
             return True
         return False
 
+    def __eq__(self, other):
+        return hash(self) == hash(other)
+
+    def __hash__(self):
+        z = ''
+        for lst in self.STATE:
+            for s in lst:
+                z += ''.join(str(s))
+        return hash(z)
+
     def getMaxTile(self):
         highScore = 0
         for line in self.STATE:

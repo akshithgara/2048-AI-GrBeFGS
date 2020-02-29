@@ -19,23 +19,20 @@ def gbfs(state, goal, spawnList, gridSize):
     root = grid(state, '', 0, spawnList, gridSize)
     frontier.put(root)
 
-    explored = []
+    explored = set()
 
     while not frontier.empty():
 
         curNode = frontier.get()
-
+        # print(curNode.STATE)
         if isGoal(curNode.STATE, goal):
             # print(curNode.STATE)# Checks if the goal state is reached.
             return curNode.PATH, curNode
 
         else:
             for child in curNode.CHILDREN(spawnList, gridSize):
-                visited = False
-                for i in explored:
-                    # print(i)
-                    if i == child.STATE:
-                        visited = True
+                visited = child in explored
                 if not visited:
                     frontier.put(child)
-                    explored.append(child.STATE)
+                    explored.add(child)
+
