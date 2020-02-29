@@ -1,3 +1,7 @@
+# Akshith Gara
+# 2048 AI
+# CS5400
+
 import queue
 from grid import grid
 
@@ -19,20 +23,18 @@ def gbfs(state, goal, spawnList, gridSize):
     root = grid(state, '', 0, spawnList, gridSize)
     frontier.put(root)
 
-    explored = set()
+    explored = set()  # A python set to store explored states. Using a set as it has O(1) look up time.
 
-    while not frontier.empty():
+    while not frontier.empty(): # Exits when the frontier is out of states to explore.
 
         curNode = frontier.get()
-        # print(curNode.STATE)
         if isGoal(curNode.STATE, goal):
-            # print(curNode.STATE)# Checks if the goal state is reached.
             return curNode.PATH, curNode
 
         else:
             for child in curNode.CHILDREN(spawnList, gridSize):
-                visited = child in explored
+                visited = child in explored # Checks if the child node is in explored set.
                 if not visited:
                     frontier.put(child)
-                    explored.add(child)
+                    explored.add(child) # Adds child node to visited set if it has just been explored.
 
