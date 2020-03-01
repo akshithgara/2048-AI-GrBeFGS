@@ -80,6 +80,7 @@ class grid:
     def __eq__(self, other):
         return hash(self) == hash(other)
 
+    # Overloaded hash function for each state.
     def __hash__(self):
         z = ''
         for lst in self.STATE:
@@ -87,6 +88,7 @@ class grid:
                 z += ''.join(str(s))
         return hash(z)
 
+    # Returns the max tile in a given state.
     def getMaxTile(self):
         highScore = 0
         for line in self.STATE:
@@ -95,6 +97,7 @@ class grid:
                     return highScore
         return highScore
 
+    # Returns the number of available cells.
     def getAvailableCells(self):
         cells = 0
         grid = self.STATE
@@ -104,6 +107,7 @@ class grid:
                     cells += 1
         return cells
 
+    # Counts how mergeable the grid i.e. it increments the count if a merge can be made in any direction.
     def mergeFactor(self):
         mergeCount = 0
         grid = copy.deepcopy(self.STATE)
@@ -123,6 +127,7 @@ class grid:
                     mergeCount += 1
         return mergeCount
 
+    # Heuristic that adds merge-count, max-tile and number of available cells.
     def heuristic(self):
         return self.getMaxTile() + self.mergeFactor() + self.getAvailableCells()
 

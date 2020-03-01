@@ -30,7 +30,6 @@ def gbfs(state, goal, spawnList, gridSize):
         curNode = frontier.get()
         if isGoal(curNode.STATE, goal):
             return curNode.PATH, curNode
-
         else:
             for child in curNode.CHILDREN(spawnList, gridSize):
                 visited = child in explored # Checks if the child node is in explored set.
